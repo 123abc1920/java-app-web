@@ -8,4 +8,6 @@ public interface IRepository {
     List<Event> getAll();
 
     void addEvent(Event event);
+
+    void deleteEvent(int id);
 }

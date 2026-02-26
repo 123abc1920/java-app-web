@@ -18,4 +18,10 @@ public class InMemoryRepository implements IRepository {
     public void addEvent(Event event) {
         events.add(event);
     }
+
+    @Override
+    public void deleteEvent(int id) {
+        System.out.println(id);
+        events.remove(id);
+    }
 }

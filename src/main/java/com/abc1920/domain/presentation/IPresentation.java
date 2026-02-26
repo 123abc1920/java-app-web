@@ -6,4 +6,6 @@ public interface IPresentation {
     void addBirthday();
 
     void addAppointment();
+
+    void deleteEvent();
 }

@@ -4,8 +4,6 @@ import com.abc1920.domain.model.Month;
 import com.abc1920.domain.model.event.Event;
 import com.abc1920.domain.presentation.IPresentation;
 import com.abc1920.usecases.facades.EventFacade;
-import com.abc1920.usecases.services.AddEventService;
-import com.abc1920.usecases.services.GetEventService;
 
 import java.util.List;
 import java.util.Scanner;
@@ -22,11 +20,13 @@ public class ConsolePresentation implements IPresentation {
         printMenu();
         while (true) {
             int choice = scanner.nextInt();
+            scanner.nextLine();
 
             switch (choice) {
                 case 1 -> showEvents();
                 case 2 -> addBirthday();
                 case 3 -> addAppointment();
+                case 4 -> deleteEvent();
                 case 0 -> {
                     return;
                 }
@@ -39,6 +39,7 @@ public class ConsolePresentation implements IPresentation {
         System.out.println("1. Показать события");
         System.out.println("2. Добавить день рождения");
         System.out.println("3. Добавить встречу");
+        System.out.println("4. Удалить событие");
         System.out.println("0. Выход");
     }
 
@@ -105,5 +106,14 @@ public class ConsolePresentation implements IPresentation {
 
         System.out.println("Встреча добавлена!");
         this.eventFacade.addEvent(false, day, month, year, name, description, isRepeat);
+    }
+
+    @Override
+    public void deleteEvent() {
+        System.out.println("=== Удаление события ===");
+
+        System.out.print("Имя события: ");
+        String name = scanner.nextLine();
+        this.eventFacade.deleteEvent(name);
     }
 }

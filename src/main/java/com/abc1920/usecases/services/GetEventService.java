@@ -15,4 +15,15 @@ public class GetEventService {
     public List<Event> getAllServices() {
         return this.repository.getAll();
     }
+
+    public int getId(String name) {
+        int i = 0;
+        for (Event e : repository.getAll()) {
+            if (e.getName().equals(name)) {
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
 }
