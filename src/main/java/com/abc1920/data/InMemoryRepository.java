@@ -15,13 +15,17 @@ public class InMemoryRepository implements IRepository {
     }
 
     @Override
+    public Event getById(int id) {
+        return events.get(id);
+    }
+
+    @Override
     public void addEvent(Event event) {
         events.add(event);
     }
 
     @Override
     public void deleteEvent(int id) {
-        System.out.println(id);
         events.remove(id);
     }
 }

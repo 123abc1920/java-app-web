@@ -8,4 +8,6 @@ public interface IPresentation {
     void addAppointment();
 
     void deleteEvent();
+
+    void updateEvent();
 }

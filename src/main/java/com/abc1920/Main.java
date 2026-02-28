@@ -8,9 +8,8 @@ import com.abc1920.usecases.facades.EventFacade;
 public class Main {
     public static void main(String[] args) {
         InMemoryRepository inMemoryRepository = new InMemoryRepository();
-        EventFactory eventFactory = new EventFactory();
 
-        EventFacade eventFacade = new EventFacade(inMemoryRepository, eventFactory);
+        EventFacade eventFacade = new EventFacade(inMemoryRepository, new EventFactory());
 
         ConsolePresentation presentation = new ConsolePresentation(eventFacade);
         presentation.start();
