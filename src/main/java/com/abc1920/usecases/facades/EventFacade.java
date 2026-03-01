@@ -63,4 +63,8 @@ public class EventFacade {
     public void updateYear(int id, int year) {
         this.updateEventService.updateYear(id, year);
     }
+
+    public void updateRepeatative(int id, boolean repeatable){
+        this.updateEventService.updateRepeatative(id, repeatable);
+    }
 }

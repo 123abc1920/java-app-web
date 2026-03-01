@@ -45,4 +45,11 @@ public class UpdateEventService {
             event.setYear(year);
         }
     }
+
+    public void updateRepeatative(int id, boolean repeatative) {
+        Event event = repository.getById(id);
+        if (event != null) {
+            event.setRepeatable(repeatative);
+        }
+    }
 }
