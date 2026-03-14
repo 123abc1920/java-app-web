@@ -1,6 +1,6 @@
 package com.abc1920.domain.presentation;
 
-public interface IPresentation {
+public interface EventPresentation {
     void showEvents();
 
     void addBirthday();

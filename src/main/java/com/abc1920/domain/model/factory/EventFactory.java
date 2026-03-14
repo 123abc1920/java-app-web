@@ -1,16 +1,16 @@
 package com.abc1920.domain.model.factory;
 
-import com.abc1920.domain.model.Month;
 import com.abc1920.domain.model.event.Appointment;
 import com.abc1920.domain.model.event.Birthday;
 import com.abc1920.domain.model.event.Event;
+import com.abc1920.dto.EventDTO;
 
 public class EventFactory {
-    public Event createEvent(boolean isBirthday, int day, Month month, int year, String name, String description, boolean isRepeatable) {
-        if (isBirthday) {
-            return new Birthday(day, month, year, name, description, isRepeatable);
+    public Event createEvent(EventDTO eventDTO) {
+        if (eventDTO.getIsBirthday()) {
+            return new Birthday(eventDTO.getId(), eventDTO.getDate(), eventDTO.getName(), eventDTO.getDescription(), eventDTO.getIsRepeatable());
         } else {
-            return new Appointment(day, month, year, name, description, isRepeatable);
+            return new Appointment(eventDTO.getId(), eventDTO.getDate(), eventDTO.getName(), eventDTO.getDescription(), eventDTO.getIsRepeatable());
         }
     }
 }

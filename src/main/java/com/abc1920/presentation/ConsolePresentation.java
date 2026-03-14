@@ -1,19 +1,23 @@
 package com.abc1920.presentation;
 
-import com.abc1920.domain.model.Month;
 import com.abc1920.domain.model.event.Event;
-import com.abc1920.domain.presentation.IPresentation;
-import com.abc1920.usecases.facades.EventFacade;
+import com.abc1920.domain.presentation.EventPresentation;
+import com.abc1920.dto.EventDTO;
+import com.abc1920.usecases.facades.EventServiceDomain;
 
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Scanner;
 
-public class ConsolePresentation implements IPresentation {
-    private Scanner scanner = new Scanner(System.in);
-    private EventFacade eventFacade;
+// todo wildcard проверить
+public class ConsolePresentation implements EventPresentation {
+    private final Scanner scanner = new Scanner(System.in);
+    private final EventServiceDomain eventServiceDomain;
 
-    public ConsolePresentation(EventFacade eventFacade) {
-        this.eventFacade = eventFacade;
+    public ConsolePresentation(EventServiceDomain eventServiceDomain) {
+        this.eventServiceDomain = eventServiceDomain;
     }
 
     public void start() {
@@ -28,6 +32,8 @@ public class ConsolePresentation implements IPresentation {
                 case 3 -> addAppointment();
                 case 4 -> deleteEvent();
                 case 5 -> updateEvent();
+                // todo pattern command
+                // chain of responsibility
                 case 0 -> {
                     return;
                 }
@@ -48,9 +54,9 @@ public class ConsolePresentation implements IPresentation {
     @Override
     public void showEvents() {
         System.out.println("Список событий:");
-        List<Event> events = this.eventFacade.getAllEvents();
-        for (Event event : events) {
-            System.out.println(event.getName() + " " + event.getDescription() + " " + event.getDay() + "." + event.getMonth() + "." + event.getYear() + " Повторяется: " + event.isRepeatable());
+        HashMap<Integer, Event> events = this.eventServiceDomain.getAllEvents();
+        for (Event event : events.values()) {
+            System.out.println(event.getName() + " " + event.getDescription() + " " + event.getDate() + " Повторяется: " + event.isRepeatable());
         }
     }
 
@@ -58,16 +64,15 @@ public class ConsolePresentation implements IPresentation {
     public void addBirthday() {
         System.out.println("=== Добавление дня рождения ===");
 
-        System.out.print("Введите день (1-31): ");
-        int day = scanner.nextInt();
-
-        System.out.print("Введите месяц (1-12): ");
-        int monthValue = scanner.nextInt();
-        Month month = Month.values()[monthValue - 1];
-
-        System.out.print("Введите год: ");
-        int year = scanner.nextInt();
-        scanner.nextLine();
+        System.out.print("Введите дату: ");
+        String dateStr = scanner.nextLine();
+        Date date = null;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            date = formatter.parse(dateStr);
+        } catch (ParseException e) {
+            System.out.println("Неверный формат даты!");
+        }
 
         System.out.print("Введите имя: ");
         String name = scanner.nextLine();
@@ -78,24 +83,25 @@ public class ConsolePresentation implements IPresentation {
         System.out.print("Это повторяющееся событие? (true/false): ");
         boolean isRepeat = scanner.nextBoolean();
 
-        System.out.println("День рождения добавлен!");
-        this.eventFacade.addEvent(true, day, month, year, name, description, isRepeat);
+        if (date != null) {
+            this.eventServiceDomain.addEvent(new EventDTO(true, name, description, date, isRepeat));
+            System.out.println("День рождения добавлен!");
+        }
     }
 
     @Override
     public void addAppointment() {
         System.out.println("=== Добавление встречи ===");
 
-        System.out.print("Введите день (1-31): ");
-        int day = scanner.nextInt();
-
-        System.out.print("Введите месяц (1-12): ");
-        int monthValue = scanner.nextInt();
-        Month month = Month.values()[monthValue - 1];
-
-        System.out.print("Введите год: ");
-        int year = scanner.nextInt();
-        scanner.nextLine();
+        System.out.print("Введите дату: ");
+        String dateStr = scanner.nextLine();
+        Date date = null;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date = formatter.parse(dateStr);
+        } catch (ParseException e) {
+            System.out.println("Неверный формат даты!");
+        }
 
         System.out.print("Введите название встречи: ");
         String name = scanner.nextLine();
@@ -106,8 +112,10 @@ public class ConsolePresentation implements IPresentation {
         System.out.print("Это повторяющееся событие? (true/false): ");
         boolean isRepeat = scanner.nextBoolean();
 
-        System.out.println("Встреча добавлена!");
-        this.eventFacade.addEvent(false, day, month, year, name, description, isRepeat);
+        if (date != null) {
+            this.eventServiceDomain.addEvent(new EventDTO(true, name, description, date, isRepeat));
+            System.out.println("День рождения добавлен!");
+        }
     }
 
     @Override
@@ -116,7 +124,7 @@ public class ConsolePresentation implements IPresentation {
 
         System.out.print("Имя события: ");
         String name = scanner.nextLine();
-        this.eventFacade.deleteEvent(name);
+        this.eventServiceDomain.deleteEvent(name);
     }
 
     @Override
@@ -128,9 +136,9 @@ public class ConsolePresentation implements IPresentation {
         System.out.print("Введите имя события для поиска: ");
         String name = scanner.nextLine();
 
-        int id = this.eventFacade.getId(name);
+        Event event = this.eventServiceDomain.getByName(name);
 
-        if (id == -1) {
+        if (event == null) {
             System.out.println("Событие с именем \"" + name + "\" не найдено!");
             return;
         }
@@ -140,10 +148,13 @@ public class ConsolePresentation implements IPresentation {
         System.out.println("3 -- День");
         System.out.println("4 -- Месяц");
         System.out.println("5 -- Год");
+        System.out.println("6 -- Повторяемость");
         System.out.println("0 -- Отмена");
 
         int choice = scanner.nextInt();
         scanner.nextLine();
+
+        EventDTO eventDTO = null;
 
         switch (choice) {
             case 1 -> {
@@ -153,66 +164,43 @@ public class ConsolePresentation implements IPresentation {
                 if (newName.trim().isEmpty()) {
                     System.out.println("Название не может быть пустым!");
                 } else {
-                    this.eventFacade.updateName(id, newName);
-                    System.out.println("Название успешно обновлено на \"" + newName + "\"");
+                    eventDTO = new EventDTO(event.getId(), newName, event.getDescription(), event.getDate(), event.isRepeatable());
                 }
             }
             case 2 -> {
                 System.out.print("Введите новое описание: ");
                 String newDesc = scanner.nextLine();
-                this.eventFacade.updateDescription(id, newDesc);
-                System.out.println("Описание успешно обновлено");
+                eventDTO = new EventDTO(event.getId(), event.getName(), newDesc, event.getDate(), event.isRepeatable());
             }
             case 3 -> {
-                System.out.print("Введите новый день (1-31): ");
-                int newDay = scanner.nextInt();
-                scanner.nextLine();
-
-                if (newDay < 1 || newDay > 31) {
-                    System.out.println("День должен быть в диапазоне от 1 до 31!");
-                } else {
-                    this.eventFacade.updateDay(id, newDay);
-                    System.out.println("День успешно обновлен на " + newDay);
+                System.out.print("Введите новую дату: ");
+                String dateStr = scanner.nextLine();
+                Date date = null;
+                try {
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
+                    date = formatter.parse(dateStr);
+                } catch (ParseException e) {
+                    System.out.println("Неверный формат даты!");
+                    return;
                 }
+
+                eventDTO = new EventDTO(event.getId(), event.getName(), event.getDescription(), date, event.isRepeatable());
             }
             case 4 -> {
-                System.out.print("Введите номер нового месяца (1-12): ");
-                int newMonth = scanner.nextInt();
-                scanner.nextLine();
-
-                if (newMonth < 1 || newMonth > 12) {
-                    System.out.println("Месяц должен быть в диапазоне от 1 до 12!");
-                } else {
-                    this.eventFacade.updateMonth(id, Month.values()[newMonth - 1]);
-                    System.out.println("Месяц успешно обновлен на " + Month.values()[newMonth - 1]);
-                }
-            }
-            case 5 -> {
-                System.out.print("Введите новый год: ");
-                int newYear = scanner.nextInt();
-                scanner.nextLine();
-
-                if (newYear < 2024) {
-                    System.out.println("Вы ввели год в прошлом. Продолжить? (y/n): ");
-                    String confirm = scanner.nextLine();
-                    if (confirm.equalsIgnoreCase("y")) {
-                        this.eventFacade.updateYear(id, newYear);
-                        System.out.println("Год успешно обновлен на " + newYear);
-                    } else {
-                        System.out.println("Обновление года отменено");
-                    }
-                } else {
-                    this.eventFacade.updateYear(id, newYear);
-                    System.out.println("Год успешно обновлен на " + newYear);
-                }
+                System.out.print("Это повторяющееся событие? (true/false): ");
+                boolean isRepeat = scanner.nextBoolean();
+                eventDTO = new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getDate(), isRepeat);
             }
             case 0 -> {
                 System.out.println("Обновление события отменено");
                 return;
             }
             default -> {
-                System.out.println("Выберите от 0 до 5");
+                System.out.println("Выберите от 0 до 4");
+                return;
             }
         }
+
+        this.eventServiceDomain.update(eventDTO);
     }
 }

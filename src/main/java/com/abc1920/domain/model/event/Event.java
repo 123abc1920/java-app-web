@@ -1,37 +1,24 @@
 package com.abc1920.domain.model.event;
 
-import com.abc1920.domain.model.Month;
+import java.util.Date;
 
 public abstract class Event {
-    private int day;
-    private Month month;
-    private int year;
+    private int id;
+    private Date date;
     private String name;
     private String description;
     private boolean isRepeatable;
 
-    public int getDay() {
-        return this.day;
+    public int getId() {
+        return this.id;
     }
 
-    public void setDay(int day) {
-        this.day = day;
+    public Date getDate() {
+        return this.date;
     }
 
-    public Month getMonth() {
-        return this.month;
-    }
-
-    public void setMonth(Month month) {
-        this.month = month;
-    }
-
-    public int getYear() {
-        return this.year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getName() {
@@ -58,10 +45,9 @@ public abstract class Event {
         return isRepeatable;
     }
 
-    public Event(int day, Month month, int year, String name, String description, boolean isRepeatable) {
-        this.day = day;
-        this.month = month;
-        this.year = year;
+    public Event(int id, Date date, String name, String description, boolean isRepeatable) {
+        this.id = id;
+        this.date = date;
         this.name = name;
         this.description = description;
         this.isRepeatable = isRepeatable;

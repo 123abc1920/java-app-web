@@ -1,13 +1,9 @@
 package com.abc1920.domain.model.event;
 
-import com.abc1920.domain.model.Month;
+import java.util.Date;
 
 public class Appointment extends Event {
-    public Appointment(int day, Month month, int year, String name, String description, boolean isRepeatable) {
-        super(day, month, year, name, description, isRepeatable);
-    }
-
-    public Appointment(int day, Month month, int year, String name, String description) {
-        super(day, month, year, name, description, false);
+    public Appointment(int id, Date date, String name, String description, boolean isRepeatable) {
+        super(id, date, name, description, isRepeatable);
     }
 }
