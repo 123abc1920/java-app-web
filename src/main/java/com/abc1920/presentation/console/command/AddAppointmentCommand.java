@@ -41,6 +41,7 @@ public class AddAppointmentCommand implements Command {
 
         System.out.print("Это повторяющееся событие? (true/false): ");
         boolean isRepeat = scanner.nextBoolean();
+        scanner.nextLine();
 
         if (date != null) {
             this.eventServiceDomain.addEvent(new EventDTO(true, name, description, date, isRepeat));

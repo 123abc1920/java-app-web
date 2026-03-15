@@ -30,4 +30,9 @@ public final class CommandTriggers {
     public static final List<String> EXIT = Arrays.asList(
             "exit", "quit", "0"
     );
+
+    public static final List<String> UPD_NAME = Arrays.asList("name", "1");
+    public static final List<String> UPD_DESCRIPTION = Arrays.asList("description", "desc", "2");
+    public static final List<String> UPD_DATE = Arrays.asList("date", "3");
+    public static final List<String> UPD_REPEAT = Arrays.asList("repeatable", "repeat", "4");
 }

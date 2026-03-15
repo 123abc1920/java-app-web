@@ -1,22 +1,47 @@
 package com.abc1920.presentation.console.command.update;
 
-import com.abc1920.presentation.console.command.Command;
+import com.abc1920.domain.model.event.Event;
+import com.abc1920.dto.EventDTO;
+import com.abc1920.presentation.console.command.triggers.CommandTriggers;
+import com.abc1920.usecases.facades.EventServiceDomain;
 
 import java.util.List;
+import java.util.Scanner;
 
-public class UpdRepeatableCommand implements Command {
+public class UpdRepeatableCommand implements UpdateCommand {
+    private final Scanner scanner;
+    private final EventServiceDomain eventServiceDomain;
+
+    private Event event;
+
+    public UpdRepeatableCommand(Scanner scanner, EventServiceDomain eventServiceDomain) {
+        this.scanner = scanner;
+        this.eventServiceDomain = eventServiceDomain;
+    }
+
     @Override
     public void execute() {
+        System.out.print("Это повторяющееся событие? (true/false): ");
+        boolean isRepeat = scanner.nextBoolean();
+        scanner.nextLine();
 
+        EventDTO eventDTO = new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getDate(), isRepeat);
+
+        this.eventServiceDomain.update(eventDTO);
     }
 
     @Override
     public boolean supports(String userInput) {
-        return false;
+        return this.triggers().contains(userInput);
     }
 
     @Override
     public List<String> triggers() {
-        return List.of();
+        return CommandTriggers.UPD_REPEAT;
+    }
+
+    @Override
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }

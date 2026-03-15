@@ -1,12 +1,11 @@
 package com.abc1920.presentation.console;
 
 import com.abc1920.presentation.console.command.*;
-import com.abc1920.presentation.console.command.triggers.CommandTriggers;
 
 import java.util.List;
 
 public class CommandChain {
-    private final List<Command> commands;
+    protected final List<Command> commands;
 
     public CommandChain(List<Command> commands) {
         this.commands = commands;

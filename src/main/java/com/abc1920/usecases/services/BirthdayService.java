@@ -54,7 +54,7 @@ public class BirthdayService {
         Birthday event = this.birthdayRepository.getById(eventDTO.getId());
         event.setDate(eventDTO.getDate());
         event.setDescription(eventDTO.getDescription());
-        event.setName(event.getName());
+        event.setName(eventDTO.getName());
         event.setRepeatable(eventDTO.getIsRepeatable());
     }
 }
