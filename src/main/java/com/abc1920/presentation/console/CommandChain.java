@@ -2,22 +2,14 @@ package com.abc1920.presentation.console;
 
 import com.abc1920.presentation.console.command.*;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
-import com.abc1920.usecases.facades.EventServiceDomain;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class CommandChain {
-    private List<Command> commands = new ArrayList<>();
+    private final List<Command> commands;
 
-    public CommandChain(EventServiceDomain eventServiceDomain, Scanner scanner) {
-        commands.add(new ShowEventCommand(eventServiceDomain));
-        commands.add(new AddBirthdayCommand(eventServiceDomain, scanner));
-        commands.add(new AddAppointmentCommand(eventServiceDomain, scanner));
-        commands.add(new DeleteEventCommand(eventServiceDomain, scanner));
-        commands.add(new UpdateEventCommand(eventServiceDomain, scanner));
-        commands.add(new ExitCommand());
+    public CommandChain(List<Command> commands) {
+        this.commands = commands;
     }
 
     public void process(String userInput) {
@@ -31,15 +23,12 @@ public class CommandChain {
     }
 
     public String getAll() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
 
-        s += CommandTriggers.SHOW_EVENTS.toString() + "\n";
-        s += CommandTriggers.ADD_BIRTHDAY.toString() + "\n";
-        s += CommandTriggers.ADD_APPOINTMENT.toString() + "\n";
-        s += CommandTriggers.DELETE_EVENT.toString() + "\n";
-        s += CommandTriggers.UPDATE_EVENT.toString() + "\n";
-        s += CommandTriggers.EXIT.toString();
+        for (Command c : commands) {
+            s.append(c.triggers().toString()).append("\n");
+        }
 
-        return s;
+        return s.toString().replaceAll("\\[", "").replaceAll("]", "");
     }
 }

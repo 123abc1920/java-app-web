@@ -1,20 +1,13 @@
 package com.abc1920.presentation.console;
 
-import com.abc1920.usecases.facades.EventServiceDomain;
-
 import java.util.Scanner;
-
-// todo pattern command
-// chain of responsibility
 
 public class ConsolePresentation {
     private final Scanner scanner = new Scanner(System.in);
-    private final EventServiceDomain eventServiceDomain;
 
-    private CommandChain commandChain;
+    private final CommandChain commandChain;
 
-    public ConsolePresentation(EventServiceDomain eventServiceDomain, CommandChain commandChain) {
-        this.eventServiceDomain = eventServiceDomain;
+    public ConsolePresentation(CommandChain commandChain) {
         this.commandChain = commandChain;
     }
 
