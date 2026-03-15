@@ -5,6 +5,7 @@ import com.abc1920.presentation.console.command.triggers.CommandTriggers;
 import com.abc1920.usecases.facades.EventServiceDomain;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class ShowEventCommand implements Command {
     EventServiceDomain eventServiceDomain;
@@ -24,6 +25,11 @@ public class ShowEventCommand implements Command {
 
     @Override
     public boolean supports(String userInput) {
-        return CommandTriggers.SHOW_EVENTS.contains(userInput);
+        return this.triggers().contains(userInput);
+    }
+
+    @Override
+    public List<String> triggers() {
+        return CommandTriggers.SHOW_EVENTS;
     }
 }

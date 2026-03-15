@@ -8,6 +8,7 @@ import com.abc1920.usecases.facades.EventServiceDomain;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class UpdateEventCommand implements Command {
@@ -97,6 +98,11 @@ public class UpdateEventCommand implements Command {
 
     @Override
     public boolean supports(String userInput) {
-        return CommandTriggers.UPDATE_EVENT.contains(userInput);
+        return this.triggers().contains(userInput);
+    }
+
+    @Override
+    public List<String> triggers() {
+        return CommandTriggers.UPDATE_EVENT;
     }
 }

@@ -3,6 +3,7 @@ package com.abc1920.presentation.console.command;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
 import com.abc1920.usecases.facades.EventServiceDomain;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class DeleteEventCommand implements Command {
@@ -25,6 +26,11 @@ public class DeleteEventCommand implements Command {
 
     @Override
     public boolean supports(String userInput) {
-        return CommandTriggers.DELETE_EVENT.contains(userInput);
+        return this.triggers().contains(userInput);
+    }
+
+    @Override
+    public List<String> triggers() {
+        return CommandTriggers.DELETE_EVENT;
     }
 }
