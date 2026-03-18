@@ -4,6 +4,7 @@ import com.abc1920.domain.model.event.Event;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
 import com.abc1920.usecases.facades.EventServiceDomain;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,8 +19,10 @@ public class ShowEventCommand implements Command {
     public void execute() {
         System.out.println("Список событий:");
         HashMap<Integer, Event> events = this.eventServiceDomain.getAllEvents();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+
         for (Event event : events.values()) {
-            System.out.println(event.getName() + " " + event.getDescription() + " " + event.getDate() + " Повторяется: " + event.isRepeatable());
+            System.out.println(event.getName() + " " + event.getDescription() + " " + formatter.format(event.getDate()) + " Повторяется: " + event.isRepeatable());
         }
     }
 
