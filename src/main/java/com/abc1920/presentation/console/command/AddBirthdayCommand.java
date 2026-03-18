@@ -31,6 +31,7 @@ public class AddBirthdayCommand implements Command {
             date = formatter.parse(dateStr);
         } catch (ParseException e) {
             System.out.println("Неверный формат даты!");
+            return;
         }
 
         System.out.print("Введите имя: ");
@@ -39,12 +40,8 @@ public class AddBirthdayCommand implements Command {
         System.out.print("Введите описание: ");
         String description = scanner.nextLine();
 
-        System.out.print("Это повторяющееся событие? (true/false): ");
-        boolean isRepeat = scanner.nextBoolean();
-        scanner.nextLine();
-
         if (date != null) {
-            this.eventServiceDomain.addEvent(new EventDTO(true, name, description, date, isRepeat));
+            this.eventServiceDomain.addEvent(new EventDTO(true, name, description, date, true));
             System.out.println("День рождения добавлен!");
         }
     }
