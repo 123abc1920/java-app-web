@@ -7,7 +7,7 @@ import java.util.List;
 public class ExitCommand implements Command {
     @Override
     public void execute() {
-        return;
+        System.exit(0);
     }
 
     @Override
