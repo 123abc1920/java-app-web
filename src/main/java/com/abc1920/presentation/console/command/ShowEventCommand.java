@@ -22,7 +22,7 @@ public class ShowEventCommand implements Command {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
         for (Event event : events.values()) {
-            System.out.println(event.getName() + " " + event.getDescription() + " " + formatter.format(event.getDate()) + " Повторяется: " + event.isRepeatable());
+            System.out.println(event.getId() + " " + event.getName() + " " + event.getDescription() + " " + formatter.format(event.getDate()) + " Повторяется: " + event.isRepeatable());
         }
     }
 

@@ -23,7 +23,7 @@ public class AppFactory {
         AppointmentRepository appointmentRepository = new AppointmentRepository();
         AppointmentService appointmentService = new AppointmentService(appointmentRepository);
 
-        EventServiceDomain eventServiceDomain = new EventServiceDomain(birthdayService, appointmentService, new EventFactory());
+        EventServiceDomain eventServiceDomain = new EventServiceDomain(birthdayService, appointmentService, new EventFactory(new IdFactory()));
 
         CommandChain commandChain = createCommandChain(eventServiceDomain, scanner);
         ConsolePresentation presentation = new ConsolePresentation(commandChain);
