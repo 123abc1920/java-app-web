@@ -1,12 +1,12 @@
 package com.abc1920.usecases.services;
 
-import com.abc1920.data.BirthdayRepository;
+import com.abc1920.data.InMemoryBirthdayRepository;
 import com.abc1920.domain.model.event.Birthday;
 import com.abc1920.domain.model.event.Event;
+import com.abc1920.domain.repository.BirthdayRepository;
 import com.abc1920.dto.EventDTO;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class BirthdayService {
     private final BirthdayRepository birthdayRepository;

@@ -1,8 +1,9 @@
 package com.abc1920.usecases.services;
 
-import com.abc1920.data.AppointmentRepository;
+import com.abc1920.data.InMemoryAppointmentRepository;
 import com.abc1920.domain.model.event.Appointment;
 import com.abc1920.domain.model.event.Event;
+import com.abc1920.domain.repository.AppointmentRepository;
 import com.abc1920.dto.EventDTO;
 
 import java.util.ArrayList;

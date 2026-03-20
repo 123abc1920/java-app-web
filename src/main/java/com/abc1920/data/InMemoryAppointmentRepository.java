@@ -1,26 +1,27 @@
 package com.abc1920.data;
 
-import com.abc1920.domain.model.event.Birthday;
+import com.abc1920.domain.model.event.Appointment;
+import com.abc1920.domain.repository.AppointmentRepository;
 import com.abc1920.domain.repository.CRUDRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class BirthdayRepository implements CRUDRepository<Birthday> {
-    private final HashMap<Integer, Birthday> events = new HashMap<Integer, Birthday>();
+public class InMemoryAppointmentRepository implements AppointmentRepository {
+    private final HashMap<Integer, Appointment> events = new HashMap<>();
 
     @Override
-    public ArrayList<Birthday> getAll() {
+    public ArrayList<Appointment> getAll() {
         return new ArrayList<>(events.values());
     }
 
     @Override
-    public Birthday getById(int id) {
+    public Appointment getById(int id) {
         return events.get(id);
     }
 
     @Override
-    public void add(Birthday item) {
+    public void add(Appointment item) {
         events.put(item.getId(), item);
     }
 
@@ -31,8 +32,6 @@ public class BirthdayRepository implements CRUDRepository<Birthday> {
 
     @Override
     public boolean exists(int id) {
-        if (events.containsKey(id)) {
-            return true;
-        } else return false;
+        return events.containsKey(id);
     }
 }

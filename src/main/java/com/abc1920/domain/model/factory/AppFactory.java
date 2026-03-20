@@ -1,10 +1,9 @@
 package com.abc1920.domain.model.factory;
 
-import com.abc1920.data.AppointmentRepository;
-import com.abc1920.data.BirthdayRepository;
+import com.abc1920.domain.repository.AppointmentRepository;
+import com.abc1920.domain.repository.BirthdayRepository;
 import com.abc1920.presentation.console.CommandChain;
 import com.abc1920.presentation.console.ConsolePresentation;
-import com.abc1920.presentation.console.command.*;
 import com.abc1920.usecases.facades.EventServiceDomain;
 import com.abc1920.usecases.services.AppointmentService;
 import com.abc1920.usecases.services.BirthdayService;
