@@ -2,6 +2,7 @@ package com.abc1920.presentation.console.command.update;
 
 import com.abc1920.domain.model.event.Event;
 import com.abc1920.dto.EventDTO;
+import com.abc1920.presentation.console.CommandResult;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
 import com.abc1920.usecases.facades.EventServiceDomain;
 
@@ -20,13 +21,15 @@ public class UpdDescriptionCommand implements UpdateCommand {
     }
 
     @Override
-    public void execute() {
+    public CommandResult execute() {
         System.out.print("Введите новое описание: ");
         String newDesc = scanner.nextLine();
 
         EventDTO eventDTO = new EventDTO(event.getId(), event.getName(), newDesc, event.getDate(), event.isRepeatable());
 
         this.eventServiceDomain.update(eventDTO);
+
+        return CommandResult.CONTINUE;
     }
 
     @Override

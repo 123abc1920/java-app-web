@@ -1,6 +1,7 @@
 package com.abc1920.presentation.console.command;
 
 import com.abc1920.dto.EventDTO;
+import com.abc1920.presentation.console.CommandResult;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
 import com.abc1920.usecases.facades.EventServiceDomain;
 
@@ -20,7 +21,7 @@ public class AddAppointmentCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public CommandResult execute() {
         System.out.println("=== Добавление встречи ===");
 
         System.out.print("Введите дату: ");
@@ -47,6 +48,8 @@ public class AddAppointmentCommand implements Command {
             this.eventServiceDomain.addEvent(new EventDTO(true, name, description, date, isRepeat));
             System.out.println("Встреча добавлена!");
         }
+
+        return CommandResult.CONTINUE;
     }
 
     @Override

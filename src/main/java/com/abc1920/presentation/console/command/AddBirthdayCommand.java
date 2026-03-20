@@ -1,6 +1,7 @@
 package com.abc1920.presentation.console.command;
 
 import com.abc1920.dto.EventDTO;
+import com.abc1920.presentation.console.CommandResult;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
 import com.abc1920.usecases.facades.EventServiceDomain;
 
@@ -20,7 +21,7 @@ public class AddBirthdayCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public CommandResult execute() {
         System.out.println("=== Добавление дня рождения ===");
 
         System.out.print("Введите дату: ");
@@ -31,7 +32,7 @@ public class AddBirthdayCommand implements Command {
             date = formatter.parse(dateStr);
         } catch (ParseException e) {
             System.out.println("Неверный формат даты!");
-            return;
+            return CommandResult.CONTINUE;
         }
 
         System.out.print("Введите имя: ");
@@ -44,6 +45,8 @@ public class AddBirthdayCommand implements Command {
             this.eventServiceDomain.addEvent(new EventDTO(true, name, description, date, true));
             System.out.println("День рождения добавлен!");
         }
+
+        return CommandResult.CONTINUE;
     }
 
     @Override

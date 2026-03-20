@@ -13,9 +13,11 @@ public class ConsolePresentation {
 
     public void start() {
         printMenu();
-        while (true) {
+        
+        CommandResult result = CommandResult.CONTINUE;
+        while (result == CommandResult.CONTINUE) {
             String choice = scanner.nextLine();
-            commandChain.process(choice);
+            result = commandChain.process(choice);
         }
     }
 

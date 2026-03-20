@@ -1,6 +1,7 @@
 package com.abc1920.presentation.console.command;
 
 import com.abc1920.domain.model.event.Event;
+import com.abc1920.presentation.console.CommandResult;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
 import com.abc1920.usecases.facades.EventServiceDomain;
 
@@ -16,7 +17,7 @@ public class ShowEventCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public CommandResult execute() {
         System.out.println("Список событий:");
         HashMap<Integer, Event> events = this.eventServiceDomain.getAllEvents();
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
@@ -24,6 +25,8 @@ public class ShowEventCommand implements Command {
         for (Event event : events.values()) {
             System.out.println(event.getId() + " " + event.getName() + " " + event.getDescription() + " " + formatter.format(event.getDate()) + " Повторяется: " + event.isRepeatable());
         }
+
+        return CommandResult.CONTINUE;
     }
 
     @Override

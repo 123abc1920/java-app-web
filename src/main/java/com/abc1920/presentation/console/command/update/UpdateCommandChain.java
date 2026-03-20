@@ -2,6 +2,7 @@ package com.abc1920.presentation.console.command.update;
 
 import com.abc1920.domain.model.event.Event;
 import com.abc1920.presentation.console.CommandChain;
+import com.abc1920.presentation.console.CommandResult;
 import com.abc1920.presentation.console.command.Command;
 
 import java.util.List;

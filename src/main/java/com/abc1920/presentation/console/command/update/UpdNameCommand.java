@@ -2,6 +2,7 @@ package com.abc1920.presentation.console.command.update;
 
 import com.abc1920.domain.model.event.Event;
 import com.abc1920.dto.EventDTO;
+import com.abc1920.presentation.console.CommandResult;
 import com.abc1920.presentation.console.command.Command;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
 import com.abc1920.usecases.facades.EventServiceDomain;
@@ -20,7 +21,7 @@ public class UpdNameCommand implements UpdateCommand {
     }
 
     @Override
-    public void execute() {
+    public CommandResult execute() {
         System.out.print("Введите новое название: ");
         String newName = scanner.nextLine();
 
@@ -33,6 +34,8 @@ public class UpdNameCommand implements UpdateCommand {
         }
 
         this.eventServiceDomain.update(eventDTO);
+
+        return CommandResult.CONTINUE;
     }
 
     @Override

@@ -11,14 +11,14 @@ public class CommandChain {
         this.commands = commands;
     }
 
-    public void process(String userInput) {
+    public CommandResult process(String userInput) {
         for (Command cmd : commands) {
             if (cmd.supports(userInput)) {
-                cmd.execute();
-                return;
+                return cmd.execute();
             }
         }
         System.out.println("Команда не найдена");
+        return CommandResult.CONTINUE;
     }
 
     public String getAll() {

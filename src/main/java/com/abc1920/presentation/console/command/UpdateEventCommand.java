@@ -2,6 +2,7 @@ package com.abc1920.presentation.console.command;
 
 import com.abc1920.domain.model.event.Event;
 import com.abc1920.presentation.console.CommandChain;
+import com.abc1920.presentation.console.CommandResult;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
 import com.abc1920.presentation.console.command.update.*;
 import com.abc1920.usecases.facades.EventServiceDomain;
@@ -34,7 +35,7 @@ public class UpdateEventCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public CommandResult execute() {
         System.out.println("ОБНОВЛЕНИЕ СОБЫТИЯ");
 
         System.out.print("Введите имя события для поиска: ");
@@ -44,13 +45,15 @@ public class UpdateEventCommand implements Command {
 
         if (event == null) {
             System.out.println("Событие с именем \"" + name + "\" не найдено!");
-            return;
+            return CommandResult.CONTINUE;
         }
 
         System.out.println(updateCommandChain.getAll());
 
         String choice = scanner.nextLine();
         updateCommandChain.process(choice, event);
+
+        return CommandResult.CONTINUE;
     }
 
     @Override

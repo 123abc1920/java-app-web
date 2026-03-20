@@ -1,5 +1,6 @@
 package com.abc1920.presentation.console.command;
 
+import com.abc1920.presentation.console.CommandResult;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
 import com.abc1920.usecases.facades.EventServiceDomain;
 
@@ -16,12 +17,14 @@ public class DeleteEventCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public CommandResult execute() {
         System.out.println("=== Удаление события ===");
 
         System.out.print("Имя события: ");
         String name = scanner.nextLine();
         this.eventServiceDomain.deleteEvent(name);
+
+        return CommandResult.CONTINUE;
     }
 
     @Override
