@@ -8,6 +8,7 @@ import com.abc1920.dto.EventDTO;
 import com.abc1920.usecases.services.AppointmentService;
 import com.abc1920.usecases.services.BirthdayService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EventServiceDomain {
@@ -24,14 +25,14 @@ public class EventServiceDomain {
     }
 
     public HashMap<Integer, Event> getAllEvents() {
-        HashMap<Integer, Birthday> birthdays = this.birthdayService.getAllBirthdays();
-        HashMap<Integer, Appointment> appointments = this.appointmentService.getAllAppointments();
+        ArrayList<Birthday> birthdays = this.birthdayService.getAllBirthdays();
+        ArrayList<Appointment> appointments = this.appointmentService.getAllAppointments();
 
         HashMap<Integer, Event> result = new HashMap<>();
-        for (Event e : birthdays.values()) {
+        for (Event e : birthdays) {
             result.put(e.getId(), e);
         }
-        for (Event e : appointments.values()) {
+        for (Event e : appointments) {
             result.put(e.getId(), e);
         }
 
@@ -39,13 +40,10 @@ public class EventServiceDomain {
     }
 
     public boolean isBirthday(int id) {
-        HashMap<Integer, Birthday> birthdays = this.birthdayService.getAllBirthdays();
-        HashMap<Integer, Appointment> appointments = this.appointmentService.getAllAppointments();
-
-        if (birthdays.containsKey(id)) {
+        if (this.birthdayService.containsId(id)) {
             return true;
         }
-        if (appointments.containsKey(id)) {
+        if (this.appointmentService.containsId(id)) {
             return false;
         }
         return false;

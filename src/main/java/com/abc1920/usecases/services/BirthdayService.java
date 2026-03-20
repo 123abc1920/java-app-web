@@ -5,6 +5,7 @@ import com.abc1920.domain.model.event.Birthday;
 import com.abc1920.domain.model.event.Event;
 import com.abc1920.dto.EventDTO;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BirthdayService {
@@ -19,7 +20,7 @@ public class BirthdayService {
     }
 
     public Birthday getByName(String name) {
-        for (Birthday b : birthdayRepository.getAll().values()) {
+        for (Birthday b : birthdayRepository.getAll()) {
             if (name.equals(b.getName())) {
                 return b;
             }
@@ -27,13 +28,13 @@ public class BirthdayService {
         return null;
     }
 
-    public HashMap<Integer, Birthday> getAllBirthdays() {
+    public ArrayList<Birthday> getAllBirthdays() {
         return this.birthdayRepository.getAll();
     }
 
     public int getId(String name) {
         int i = 0;
-        for (Event e : this.birthdayRepository.getAll().values()) {
+        for (Event e : this.birthdayRepository.getAll()) {
             if (e.getName().equals(name)) {
                 return i;
             }
@@ -56,5 +57,9 @@ public class BirthdayService {
         event.setDescription(eventDTO.getDescription());
         event.setName(eventDTO.getName());
         event.setRepeatable(eventDTO.getIsRepeatable());
+    }
+
+    public boolean containsId(int id) {
+        return this.birthdayRepository.exists(id);
     }
 }

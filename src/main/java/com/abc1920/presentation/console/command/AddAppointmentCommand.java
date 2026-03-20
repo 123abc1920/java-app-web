@@ -45,7 +45,7 @@ public class AddAppointmentCommand implements Command {
 
         if (date != null) {
             this.eventServiceDomain.addEvent(new EventDTO(true, name, description, date, isRepeat));
-            System.out.println("День рождения добавлен!");
+            System.out.println("Встреча добавлена!");
         }
     }
 

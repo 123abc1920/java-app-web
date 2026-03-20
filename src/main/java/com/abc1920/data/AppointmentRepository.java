@@ -3,14 +3,15 @@ package com.abc1920.data;
 import com.abc1920.domain.model.event.Appointment;
 import com.abc1920.domain.repository.CRUDRepository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AppointmentRepository implements CRUDRepository<Appointment> {
     private final HashMap<Integer, Appointment> events = new HashMap<>();
 
     @Override
-    public HashMap<Integer, Appointment> getAll() {
-        return events;
+    public ArrayList<Appointment> getAll() {
+        return new ArrayList<>(events.values());
     }
 
     @Override
@@ -26,5 +27,13 @@ public class AppointmentRepository implements CRUDRepository<Appointment> {
     @Override
     public void delete(int id) {
         events.remove(id);
+    }
+
+    @Override
+    public boolean exists(int id) {
+        if (events.containsKey(id)) {
+            return true;
+        }
+        return false;
     }
 }

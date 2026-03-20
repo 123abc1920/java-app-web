@@ -5,7 +5,7 @@ import com.abc1920.domain.model.event.Appointment;
 import com.abc1920.domain.model.event.Event;
 import com.abc1920.dto.EventDTO;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
@@ -19,7 +19,7 @@ public class AppointmentService {
     }
 
     public Appointment getByName(String name) {
-        for (Appointment a : appointmentRepository.getAll().values()) {
+        for (Appointment a : appointmentRepository.getAll()) {
             if (name.equals(a.getName())) {
                 return a;
             }
@@ -27,13 +27,13 @@ public class AppointmentService {
         return null;
     }
 
-    public HashMap<Integer, Appointment> getAllAppointments() {
+    public ArrayList<Appointment> getAllAppointments() {
         return this.appointmentRepository.getAll();
     }
 
     public int getId(String name) {
         int i = 0;
-        for (Event e : this.appointmentRepository.getAll().values()) {
+        for (Event e : this.appointmentRepository.getAll()) {
             if (e.getName().equals(name)) {
                 return i;
             }
@@ -56,5 +56,9 @@ public class AppointmentService {
         event.setDescription(eventDTO.getDescription());
         event.setName(eventDTO.getName());
         event.setRepeatable(eventDTO.getIsRepeatable());
+    }
+
+    public boolean containsId(int id) {
+        return this.appointmentRepository.exists(id);
     }
 }
