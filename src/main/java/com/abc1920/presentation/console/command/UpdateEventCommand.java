@@ -1,10 +1,14 @@
 package com.abc1920.presentation.console.command;
 
 import com.abc1920.domain.model.event.Event;
-import com.abc1920.presentation.console.CommandChain;
 import com.abc1920.presentation.console.CommandResult;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
-import com.abc1920.presentation.console.command.update.*;
+import com.abc1920.presentation.console.command.update.UpdDateCommand;
+import com.abc1920.presentation.console.command.update.UpdDescriptionCommand;
+import com.abc1920.presentation.console.command.update.UpdateCommand;
+import com.abc1920.presentation.console.command.update.UpdateCommandChain;
+import com.abc1920.presentation.console.command.update.UpdNameCommand;
+import com.abc1920.presentation.console.command.update.UpdRepeatableCommand;
 import com.abc1920.usecases.facades.EventServiceDomain;
 
 import java.util.ArrayList;

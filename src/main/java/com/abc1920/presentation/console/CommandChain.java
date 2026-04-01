@@ -1,6 +1,6 @@
 package com.abc1920.presentation.console;
 
-import com.abc1920.presentation.console.command.*;
+import com.abc1920.presentation.console.command.Command;
 
 import java.util.List;
 

@@ -1,7 +1,13 @@
 package com.abc1920.domain.model.factory;
 
 import com.abc1920.presentation.console.CommandChain;
-import com.abc1920.presentation.console.command.*;
+import com.abc1920.presentation.console.command.AddAppointmentCommand;
+import com.abc1920.presentation.console.command.ShowEventCommand;
+import com.abc1920.presentation.console.command.AddBirthdayCommand;
+import com.abc1920.presentation.console.command.DeleteEventCommand;
+import com.abc1920.presentation.console.command.UpdateEventCommand;
+import com.abc1920.presentation.console.command.ExitCommand;
+import com.abc1920.presentation.console.command.Command;
 import com.abc1920.usecases.facades.EventServiceDomain;
 
 import java.util.ArrayList;
