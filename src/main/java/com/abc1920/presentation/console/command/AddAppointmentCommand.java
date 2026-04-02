@@ -45,7 +45,7 @@ public class AddAppointmentCommand implements Command {
         scanner.nextLine();
 
         if (date != null) {
-            this.eventServiceDomain.addEvent(new EventDTO(true, name, description, date, isRepeat));
+            this.eventServiceDomain.addEvent(new EventDTO(false, name, description, date, isRepeat));
             System.out.println("Встреча добавлена!");
         }
 

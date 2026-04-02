@@ -19,10 +19,10 @@ public class ShowEventCommand implements Command {
     @Override
     public CommandResult execute() {
         System.out.println("Список событий:");
-        HashMap<Integer, Event> events = this.eventServiceDomain.getAllEvents();
+        List<Event> events = this.eventServiceDomain.getAllEvents();
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
-        for (Event event : events.values()) {
+        for (Event event : events) {
             System.out.println(event.getId() + " " + event.getName() + " " + event.getDescription() + " " + formatter.format(event.getDate()) + " Повторяется: " + event.isRepeatable());
         }
 

@@ -3,7 +3,6 @@ package com.abc1920.data;
 import com.abc1920.domain.model.event.Appointment;
 import com.abc1920.domain.model.factory.IdFactory;
 import com.abc1920.domain.repository.AppointmentRepository;
-import com.abc1920.domain.repository.CRUDRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -10,6 +10,7 @@ import com.abc1920.usecases.services.BirthdayService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class EventServiceDomain {
     private final BirthdayService birthdayService;
@@ -24,16 +25,16 @@ public class EventServiceDomain {
         this.eventFactory = eventFactory;
     }
 
-    public HashMap<Integer, Event> getAllEvents() {
+    public List<Event> getAllEvents() {
         ArrayList<Birthday> birthdays = this.birthdayService.getAllBirthdays();
         ArrayList<Appointment> appointments = this.appointmentService.getAllAppointments();
 
-        HashMap<Integer, Event> result = new HashMap<>();
+        List<Event> result = new ArrayList<>();
         for (Event e : birthdays) {
-            result.put(e.getId(), e);
+            result.add(e);
         }
         for (Event e : appointments) {
-            result.put(e.getId(), e);
+            result.add(e);
         }
 
         return result;
