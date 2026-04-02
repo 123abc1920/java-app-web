@@ -9,24 +9,28 @@ import com.abc1920.usecases.facades.EventServiceDomain;
 import java.util.List;
 import java.util.Scanner;
 
-public class UpdRepeatableCommand implements UpdateCommand {
+public class UpdateNameCommand implements UpdateCommand {
     private final Scanner scanner;
+    private Event event;
     private final EventServiceDomain eventServiceDomain;
 
-    private Event event;
-
-    public UpdRepeatableCommand(Scanner scanner, EventServiceDomain eventServiceDomain) {
+    public UpdateNameCommand(Scanner scanner, EventServiceDomain eventServiceDomain) {
         this.scanner = scanner;
         this.eventServiceDomain = eventServiceDomain;
     }
 
     @Override
     public CommandResult execute() {
-        System.out.print("Это повторяющееся событие? (true/false): ");
-        boolean isRepeat = scanner.nextBoolean();
-        scanner.nextLine();
+        System.out.print("Введите новое название: ");
+        String newName = scanner.nextLine();
 
-        EventDTO eventDTO = new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getDate(), isRepeat);
+        EventDTO eventDTO = null;
+
+        if (newName.trim().isEmpty()) {
+            System.out.println("Название не может быть пустым!");
+        } else {
+            eventDTO = new EventDTO(event.getId(), newName, event.getDescription(), event.getDate(), event.isRepeatable());
+        }
 
         this.eventServiceDomain.update(eventDTO);
 
@@ -40,7 +44,7 @@ public class UpdRepeatableCommand implements UpdateCommand {
 
     @Override
     public List<String> triggers() {
-        return CommandTriggers.UPD_REPEAT;
+        return CommandTriggers.UPD_NAME;
     }
 
     @Override

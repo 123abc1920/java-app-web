@@ -9,23 +9,24 @@ import com.abc1920.usecases.facades.EventServiceDomain;
 import java.util.List;
 import java.util.Scanner;
 
-public class UpdDescriptionCommand implements UpdateCommand {
+public class UpdateRepeatableCommand implements UpdateCommand {
     private final Scanner scanner;
     private final EventServiceDomain eventServiceDomain;
 
     private Event event;
 
-    public UpdDescriptionCommand(Scanner scanner, EventServiceDomain eventServiceDomain) {
+    public UpdateRepeatableCommand(Scanner scanner, EventServiceDomain eventServiceDomain) {
         this.scanner = scanner;
         this.eventServiceDomain = eventServiceDomain;
     }
 
     @Override
     public CommandResult execute() {
-        System.out.print("Введите новое описание: ");
-        String newDesc = scanner.nextLine();
+        System.out.print("Это повторяющееся событие? (true/false): ");
+        boolean isRepeat = scanner.nextBoolean();
+        scanner.nextLine();
 
-        EventDTO eventDTO = new EventDTO(event.getId(), event.getName(), newDesc, event.getDate(), event.isRepeatable());
+        EventDTO eventDTO = new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getDate(), isRepeat);
 
         this.eventServiceDomain.update(eventDTO);
 
@@ -39,7 +40,7 @@ public class UpdDescriptionCommand implements UpdateCommand {
 
     @Override
     public List<String> triggers() {
-        return CommandTriggers.UPD_DESCRIPTION;
+        return CommandTriggers.UPD_REPEAT;
     }
 
     @Override

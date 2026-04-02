@@ -12,13 +12,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-public class UpdDateCommand implements UpdateCommand {
+public class UpdateDateCommand implements UpdateCommand {
     private final Scanner scanner;
     private final EventServiceDomain eventServiceDomain;
 
     private Event event;
 
-    public UpdDateCommand(Scanner scanner, EventServiceDomain eventServiceDomain) {
+    public UpdateDateCommand(Scanner scanner, EventServiceDomain eventServiceDomain) {
         this.scanner = scanner;
         this.eventServiceDomain = eventServiceDomain;
     }

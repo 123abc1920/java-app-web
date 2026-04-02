@@ -3,12 +3,12 @@ package com.abc1920.presentation.console.command;
 import com.abc1920.domain.model.event.Event;
 import com.abc1920.presentation.console.CommandResult;
 import com.abc1920.presentation.console.command.triggers.CommandTriggers;
-import com.abc1920.presentation.console.command.update.UpdDateCommand;
-import com.abc1920.presentation.console.command.update.UpdDescriptionCommand;
+import com.abc1920.presentation.console.command.update.UpdateDateCommand;
+import com.abc1920.presentation.console.command.update.UpdateDescriptionCommand;
 import com.abc1920.presentation.console.command.update.UpdateCommand;
 import com.abc1920.presentation.console.command.update.UpdateCommandChain;
-import com.abc1920.presentation.console.command.update.UpdNameCommand;
-import com.abc1920.presentation.console.command.update.UpdRepeatableCommand;
+import com.abc1920.presentation.console.command.update.UpdateNameCommand;
+import com.abc1920.presentation.console.command.update.UpdateRepeatableCommand;
 import com.abc1920.usecases.facades.EventServiceDomain;
 
 import java.util.ArrayList;
@@ -30,10 +30,10 @@ public class UpdateEventCommand implements Command {
     private UpdateCommandChain createUpdateChain(Scanner scanner, EventServiceDomain eventServiceDomain) {
         List<UpdateCommand> commands = new ArrayList<>();
 
-        commands.add(new UpdDateCommand(scanner, eventServiceDomain));
-        commands.add(new UpdDescriptionCommand(scanner, eventServiceDomain));
-        commands.add(new UpdNameCommand(scanner, eventServiceDomain));
-        commands.add(new UpdRepeatableCommand(scanner, eventServiceDomain));
+        commands.add(new UpdateDateCommand(scanner, eventServiceDomain));
+        commands.add(new UpdateDescriptionCommand(scanner, eventServiceDomain));
+        commands.add(new UpdateNameCommand(scanner, eventServiceDomain));
+        commands.add(new UpdateRepeatableCommand(scanner, eventServiceDomain));
 
         return new UpdateCommandChain(commands);
     }
