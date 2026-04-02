@@ -18,7 +18,7 @@ public class AppFactory {
         ServiceFactory serviceFactory = new ServiceFactory();
         CommandFactory commandFactory = new CommandFactory();
         PresentationFactory presentationFactory = new PresentationFactory();
-        EventFactory eventFactory = new EventFactory(new IdFactory());
+        EventFactory eventFactory = new EventFactory();
 
         BirthdayRepository birthdayRepository = repositoryFactory.createBirthdayRepository();
         BirthdayService birthdayService = serviceFactory.createBirthdayService(birthdayRepository);

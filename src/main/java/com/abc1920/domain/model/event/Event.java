@@ -13,6 +13,10 @@ public abstract class Event {
         return this.id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Date getDate() {
         return this.date;
     }
@@ -45,8 +49,7 @@ public abstract class Event {
         return isRepeatable;
     }
 
-    public Event(int id, Date date, String name, String description, boolean isRepeatable) {
-        this.id = id;
+    public Event(Date date, String name, String description, boolean isRepeatable) {
         this.date = date;
         this.name = name;
         this.description = description;

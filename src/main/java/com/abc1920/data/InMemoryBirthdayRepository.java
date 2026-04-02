@@ -1,6 +1,7 @@
 package com.abc1920.data;
 
 import com.abc1920.domain.model.event.Birthday;
+import com.abc1920.domain.model.factory.IdFactory;
 import com.abc1920.domain.repository.BirthdayRepository;
 import com.abc1920.domain.repository.CRUDRepository;
 
@@ -9,6 +10,7 @@ import java.util.HashMap;
 
 public class InMemoryBirthdayRepository implements BirthdayRepository {
     private final HashMap<Integer, Birthday> events = new HashMap<Integer, Birthday>();
+    private final IdFactory idFactory = new IdFactory();
 
     @Override
     public ArrayList<Birthday> getAll() {
@@ -22,7 +24,9 @@ public class InMemoryBirthdayRepository implements BirthdayRepository {
 
     @Override
     public void add(Birthday item) {
-        events.put(item.getId(), item);
+        int id = idFactory.generateId();
+        item.setId(id);
+        events.put(id, item);
     }
 
     @Override
