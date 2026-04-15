@@ -4,7 +4,11 @@ import com.abc1920.domain.Consts;
 import com.abc1920.domain.model.event.Birthday;
 import com.abc1920.domain.repository.BirthdayRepository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class JdbcBirthdayRepository implements BirthdayRepository {
