@@ -12,15 +12,22 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class JdbcAppointmentRepository implements AppointmentRepository {
+    private static final String SELECT_ALL = "SELECT * FROM appointment";
+    private static final String SELECT_ALL_BY_ID = "SELECT * FROM appointment WHERE id = ?";
+    private static final String INSERT = "INSERT INTO appointment (name, date, description, is_repeatable) VALUES (?, ?, ?, ?)";
+    private static final String DELETE = "DELETE FROM appointment WHERE id = ?";
+    private static final String COUNT = "SELECT COUNT(*) FROM appointment WHERE id = ?";
 
     private Appointment createAppointment(ResultSet rs) throws SQLException {
-        return new Appointment(rs.getInt("id"), rs.getDate("date"), rs.getString("name"), rs.getString("description"), rs.getBoolean("is_repeatable"));
+        return new Appointment(rs.getInt("id"), rs.getDate("date"),
+                rs.getString("name"), rs.getString("description"),
+                rs.getBoolean("is_repeatable"));
     }
 
     @Override
     public ArrayList<Appointment> getAll() {
         ArrayList<Appointment> appointments = new ArrayList<>();
-        String sql = "SELECT * FROM appointment";
+        String sql = SELECT_ALL;
 
         try (Connection conn = Consts.getConnection();
              Statement stmt = conn.createStatement();
@@ -37,7 +44,7 @@ public class JdbcAppointmentRepository implements AppointmentRepository {
 
     @Override
     public Appointment getById(int id) {
-        String sql = "SELECT * FROM appointment WHERE id = ?";
+        String sql = SELECT_ALL_BY_ID;
 
         try (Connection conn = Consts.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -56,9 +63,8 @@ public class JdbcAppointmentRepository implements AppointmentRepository {
 
     @Override
     public void add(Appointment item) {
-        String sql = "INSERT INTO appointment (name, date, description, is_repeatable) VALUES (?, ?, ?, ?)";
+        String sql = INSERT;
 
-        System.out.println("hhh");
         try (Connection conn = Consts.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -82,7 +88,7 @@ public class JdbcAppointmentRepository implements AppointmentRepository {
 
     @Override
     public void delete(int id) {
-        String sql = "DELETE FROM appointment WHERE id = ?";
+        String sql = DELETE;
 
         try (Connection conn = Consts.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -96,7 +102,7 @@ public class JdbcAppointmentRepository implements AppointmentRepository {
 
     @Override
     public boolean exists(int id) {
-        String sql = "SELECT COUNT(*) FROM appointment WHERE id = ?";
+        String sql = COUNT;
 
         try (Connection conn = Consts.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
