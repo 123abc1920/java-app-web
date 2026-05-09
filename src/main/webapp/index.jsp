@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head><title>Органайзер</title></head>
+<head><title>Календарь событий</title></head>
 <body>
-    <h1>Меню Органайзера</h1>
+    <h2>Меню</h2>
     <ul>
-        <li><a href="show-events">Список событий</a> (ShowEventCommand)</li>
-        <li><a href="add-birthday.jsp">Добавить День Рождения</a> (AddBirthdayCommand)</li>
-        <li><a href="add-appointment.jsp">Добавить Встречу</a> (AddAppointmentCommand)</li>
+        <li><a href="show-events">Показать все события</a></li>
+        <li><a href="add-appointment">Добавить встречу</a></li>
+        <li><a href="add-birthday">Добавить день рождения</a></li>
     </ul>
 </body>
 </html>

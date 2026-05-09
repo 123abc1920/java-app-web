@@ -4,7 +4,7 @@
 <body>
     <h2>=== Добавление встречи ===</h2>
     <form action="add-appointment" method="POST">
-        Дата (dd.MM.yyyy): <input type="text" name="date"><br><br>
+        Дата (dd-MM-yyyy): <input type="text" name="date"><br><br>
         Название: <input type="text" name="name"><br><br>
         Описание: <textarea name="description"></textarea><br><br>
         Повторяется:
