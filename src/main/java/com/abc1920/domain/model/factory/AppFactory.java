@@ -98,4 +98,23 @@ public class AppFactory {
         ConsolePresentation presentation = presentationFactory.createConsolePresentation(commandChain);
         presentation.start();
     }
+
+    public EventServiceDomain createServlet() {
+        createTablesIfNotExists();
+
+        RepositoryFactory repositoryFactory = new RepositoryFactory();
+        ServiceFactory serviceFactory = new ServiceFactory();
+        CommandFactory commandFactory = new CommandFactory();
+        EventFactory eventFactory = new EventFactory();
+
+        BirthdayRepository birthdayRepository = repositoryFactory.createBirthdayRepositoryJdbc();
+        BirthdayService birthdayService = serviceFactory.createBirthdayService(birthdayRepository);
+
+        AppointmentRepository appointmentRepository = repositoryFactory.createAppointmentRepositoryJdbc();
+        AppointmentService appointmentService = serviceFactory.createAppointmentService(appointmentRepository);
+
+        EventServiceDomain eventServiceDomain = serviceFactory.createEventServiceDomain(appointmentService, birthdayService, eventFactory);
+
+        return eventServiceDomain;
+    }
 }
