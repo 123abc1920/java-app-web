@@ -34,8 +34,8 @@ public class AddBirthdayServlet extends BaseServlet {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             date = formatter.parse(dateStr);
         } catch (ParseException e) {
-            req.setAttribute("error", "Неверный формат даты!");
-            req.getRequestDispatcher("/add-birthday.jsp").forward(req, resp);
+            resp.setContentType("text/html;charset=UTF-8");
+            resp.getWriter().println("<script>alert('Неверный формат даты!'); history.back();</script>");
             return;
         }
 
