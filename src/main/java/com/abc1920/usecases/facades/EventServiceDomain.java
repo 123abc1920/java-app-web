@@ -77,8 +77,6 @@ public class EventServiceDomain {
             return;
         }
 
-        System.out.println(eventDTO.getIsBirthday());
-
         if (eventDTO.getIsBirthday()) {
             this.birthdayService.update(eventDTO);
         } else {
