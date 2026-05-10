@@ -51,7 +51,7 @@ public class UpdateServlet extends BaseServlet {
         boolean isRepeat = "on".equals(repeatable);
 
         Event event = domain.getByName(oldName);
-        domain.update(new EventDTO(event.getId(), name, description, date, isRepeat));
+        domain.update(new EventDTO(event.getId(), event.getIsBirthday(), name, description, date, isRepeat));
 
         resp.sendRedirect(req.getContextPath() + "/show-events");
     }

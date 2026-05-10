@@ -3,6 +3,7 @@ package com.abc1920.data;
 import com.abc1920.domain.Consts;
 import com.abc1920.domain.model.event.Birthday;
 import com.abc1920.domain.repository.BirthdayRepository;
+import com.abc1920.dto.EventDTO;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,6 +13,13 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class JdbcBirthdayRepository implements BirthdayRepository {
+    private static final String SELECT_ALL = "SELECT * FROM birthday";
+    private static final String SELECT_BY_ID = "SELECT * FROM birthday WHERE id = ?";
+    private static final String INSERT = "INSERT INTO birthday (name, date, description, is_repeatable) VALUES (?, ?, ?, ?)";
+    private static final String DELETE = "DELETE FROM birthday WHERE id = ?";
+    private static final String COUNT = "SELECT COUNT(*) FROM birthday WHERE id = ? AND name = ? AND description = ? AND date = ? AND repeatable = ?";
+    private static final String UPDATE = "UPDATE birthday SET name = ?, description = ?, date = ?, is_repeatable = ? WHERE id = ?";
+
     private Birthday createBirthdayWithId(ResultSet rs) throws SQLException {
         return new Birthday(rs.getInt("id"), rs.getDate("date"), rs.getString("name"), rs.getString("description"), rs.getBoolean("is_repeatable"));
     }
@@ -19,7 +27,7 @@ public class JdbcBirthdayRepository implements BirthdayRepository {
     @Override
     public ArrayList<Birthday> getAll() {
         ArrayList<Birthday> birthdays = new ArrayList<>();
-        String sql = "SELECT * FROM birthday";
+        String sql = SELECT_ALL;
 
         try (Connection conn = Consts.getConnection();
              Statement stmt = conn.createStatement();
@@ -36,7 +44,7 @@ public class JdbcBirthdayRepository implements BirthdayRepository {
 
     @Override
     public Birthday getById(int id) {
-        String sql = "SELECT * FROM birthday WHERE id = ?";
+        String sql = SELECT_BY_ID;
 
         try (Connection conn = Consts.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -55,7 +63,7 @@ public class JdbcBirthdayRepository implements BirthdayRepository {
 
     @Override
     public void add(Birthday item) {
-        String sql = "INSERT INTO birthday (name, date, description, is_repeatable) VALUES (?, ?, ?, ?)";
+        String sql = INSERT;
 
         try (Connection conn = Consts.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -79,8 +87,28 @@ public class JdbcBirthdayRepository implements BirthdayRepository {
     }
 
     @Override
+    public void update(EventDTO event) {
+        String sql = UPDATE;
+
+        try (Connection conn = Consts.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, event.getName());
+            stmt.setString(2, event.getDescription());
+            stmt.setDate(3, new java.sql.Date(event.getDate().getTime()));
+            stmt.setBoolean(4, event.getIsRepeatable());
+            stmt.setInt(5, event.getId());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void delete(int id) {
-        String sql = "DELETE FROM birthday WHERE id = ?";
+        String sql = DELETE;
 
         try (Connection conn = Consts.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -93,13 +121,18 @@ public class JdbcBirthdayRepository implements BirthdayRepository {
     }
 
     @Override
-    public boolean exists(int id) {
-        String sql = "SELECT COUNT(*) FROM birthday WHERE id = ?";
+    public boolean exists(EventDTO event) {
+        String sql = COUNT;
 
         try (Connection conn = Consts.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setInt(1, event.getId());
+            stmt.setString(2, event.getName());
+            stmt.setString(3, event.getDescription());
+            stmt.setDate(4, new java.sql.Date(event.getDate().getTime()));
+            stmt.setBoolean(5, event.getIsRepeatable());
+
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {

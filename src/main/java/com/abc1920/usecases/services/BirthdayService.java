@@ -1,6 +1,5 @@
 package com.abc1920.usecases.services;
 
-import com.abc1920.data.InMemoryBirthdayRepository;
 import com.abc1920.domain.model.event.Birthday;
 import com.abc1920.domain.model.event.Event;
 import com.abc1920.domain.repository.BirthdayRepository;
@@ -57,9 +56,11 @@ public class BirthdayService {
         event.setDescription(eventDTO.getDescription());
         event.setName(eventDTO.getName());
         event.setRepeatable(eventDTO.getIsRepeatable());
+
+        this.birthdayRepository.update(eventDTO);
     }
 
-    public boolean containsId(int id) {
-        return this.birthdayRepository.exists(id);
+    public boolean containsEvent(EventDTO event) {
+        return this.birthdayRepository.exists(event);
     }
 }
