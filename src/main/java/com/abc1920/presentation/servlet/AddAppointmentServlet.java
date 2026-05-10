@@ -23,10 +23,12 @@ public class AddAppointmentServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
         String dateStr = req.getParameter("date");
         String name = req.getParameter("name");
         String description = req.getParameter("description");
-        String repeatable = req.getParameter("repeatable");
+        String repeatable = req.getParameter("isRepeat");
 
         Date date = null;
         try {
@@ -38,7 +40,7 @@ public class AddAppointmentServlet extends BaseServlet {
             return;
         }
 
-        boolean isRepeat = "on".equals(repeatable);
+        boolean isRepeat = "true".equals(repeatable);
         domain.addEvent(new EventDTO(false, name, description, date, isRepeat));
 
         resp.sendRedirect(req.getContextPath() + "/show-events");

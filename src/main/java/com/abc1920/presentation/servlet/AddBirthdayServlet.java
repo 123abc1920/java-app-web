@@ -23,6 +23,8 @@ public class AddBirthdayServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
         String dateStr = req.getParameter("date");
         String name = req.getParameter("name");
         String description = req.getParameter("description");
