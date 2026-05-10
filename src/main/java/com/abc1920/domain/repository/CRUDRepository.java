@@ -1,5 +1,7 @@
 package com.abc1920.domain.repository;
 
+import com.abc1920.dto.EventDTO;
+
 import java.util.ArrayList;
 
 public interface CRUDRepository<T> {
@@ -11,5 +13,7 @@ public interface CRUDRepository<T> {
 
     void delete(int id);
 
-    boolean exists(int id);
+    void update(EventDTO event);
+
+    boolean exists(EventDTO event);
 }

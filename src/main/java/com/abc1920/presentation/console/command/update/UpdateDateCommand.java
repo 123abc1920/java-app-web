@@ -38,7 +38,7 @@ public class UpdateDateCommand implements UpdateCommand {
             return CommandResult.CONTINUE;
         }
 
-        EventDTO eventDTO = new EventDTO(event.getId(), event.getName(), event.getDescription(), date, event.isRepeatable());
+        EventDTO eventDTO = new EventDTO(event.getId(), event.getIsBirthday(), event.getName(), event.getDescription(), date, event.isRepeatable());
 
         this.eventServiceDomain.update(eventDTO);
 

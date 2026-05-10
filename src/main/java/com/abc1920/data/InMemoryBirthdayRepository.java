@@ -1,9 +1,11 @@
 package com.abc1920.data;
 
 import com.abc1920.domain.model.event.Birthday;
+import com.abc1920.domain.model.event.Event;
 import com.abc1920.domain.model.factory.IdFactory;
 import com.abc1920.domain.repository.BirthdayRepository;
 import com.abc1920.domain.repository.CRUDRepository;
+import com.abc1920.dto.EventDTO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +37,18 @@ public class InMemoryBirthdayRepository implements BirthdayRepository {
     }
 
     @Override
-    public boolean exists(int id) {
-        return events.containsKey(id);
+    public void update(EventDTO event) {
+
+    }
+
+    @Override
+    public boolean exists(EventDTO event) {
+        for (Event e : this.events.values()) {
+            if (e.equals(event)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

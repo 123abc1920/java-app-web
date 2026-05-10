@@ -9,7 +9,6 @@ import com.abc1920.usecases.services.AppointmentService;
 import com.abc1920.usecases.services.BirthdayService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class EventServiceDomain {
@@ -40,19 +39,8 @@ public class EventServiceDomain {
         return result;
     }
 
-    public boolean isBirthday(int id) {
-        if (this.birthdayService.containsId(id)) {
-            return true;
-        }
-        if (this.appointmentService.containsId(id)) {
-            return false;
-        }
-        return false;
-    }
-
     public Event getByName(String name) {
         Event e = this.birthdayService.getByName(name);
-        System.out.println(name);
         if (e != null) {
             return e;
         } else {
@@ -89,7 +77,7 @@ public class EventServiceDomain {
             return;
         }
 
-        if (isBirthday(eventDTO.getId())) {
+        if (eventDTO.getIsBirthday()) {
             this.birthdayService.update(eventDTO);
         } else {
             this.appointmentService.update(eventDTO);

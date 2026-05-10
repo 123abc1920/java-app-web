@@ -1,6 +1,7 @@
 package com.abc1920.usecases.services;
 
-import com.abc1920.data.InMemoryAppointmentRepository;
+import com.abc1920.data.JdbcAppointmentRepository;
+import com.abc1920.data.JdbcBirthdayRepository;
 import com.abc1920.domain.model.event.Appointment;
 import com.abc1920.domain.model.event.Event;
 import com.abc1920.domain.repository.AppointmentRepository;
@@ -57,9 +58,11 @@ public class AppointmentService {
         event.setDescription(eventDTO.getDescription());
         event.setName(eventDTO.getName());
         event.setRepeatable(eventDTO.getIsRepeatable());
+
+        this.appointmentRepository.update(eventDTO);
     }
 
-    public boolean containsId(int id) {
-        return this.appointmentRepository.exists(id);
+    public boolean containsEvent(EventDTO event) {
+        return this.appointmentRepository.exists(event);
     }
 }

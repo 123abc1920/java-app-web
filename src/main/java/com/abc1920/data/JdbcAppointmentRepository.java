@@ -2,7 +2,9 @@ package com.abc1920.data;
 
 import com.abc1920.domain.Consts;
 import com.abc1920.domain.model.event.Appointment;
+import com.abc1920.domain.model.event.Event;
 import com.abc1920.domain.repository.AppointmentRepository;
+import com.abc1920.dto.EventDTO;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,7 +18,8 @@ public class JdbcAppointmentRepository implements AppointmentRepository {
     private static final String SELECT_ALL_BY_ID = "SELECT * FROM appointment WHERE id = ?";
     private static final String INSERT = "INSERT INTO appointment (name, date, description, is_repeatable) VALUES (?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM appointment WHERE id = ?";
-    private static final String COUNT = "SELECT COUNT(*) FROM appointment WHERE id = ?";
+    private static final String COUNT = "SELECT COUNT(*) FROM appointment WHERE id = ? AND name = ? AND description = ? AND date = ? AND is_repeatable = ?";
+    private static final String UPDATE = "UPDATE appointment SET name = ?, description = ?, date = ?, is_repeatable = ? WHERE id = ?";
 
     private Appointment createAppointment(ResultSet rs) throws SQLException {
         return new Appointment(rs.getInt("id"), rs.getDate("date"),
@@ -101,13 +104,38 @@ public class JdbcAppointmentRepository implements AppointmentRepository {
     }
 
     @Override
-    public boolean exists(int id) {
+    public void update(EventDTO event) {
+        String sql = UPDATE;
+
+        try (Connection conn = Consts.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, event.getName());
+            stmt.setString(2, event.getDescription());
+            stmt.setDate(3, new java.sql.Date(event.getDate().getTime()));
+            stmt.setBoolean(4, event.getIsRepeatable());
+            stmt.setInt(5, event.getId());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean exists(EventDTO event) {
         String sql = COUNT;
 
         try (Connection conn = Consts.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setInt(1, event.getId());
+            stmt.setString(2, event.getName());
+            stmt.setString(3, event.getDescription());
+            stmt.setDate(4, new java.sql.Date(event.getDate().getTime()));
+            stmt.setBoolean(5, event.getIsRepeatable());
+
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {

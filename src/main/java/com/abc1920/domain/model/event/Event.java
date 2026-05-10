@@ -8,6 +8,7 @@ public abstract class Event {
     private String name;
     private String description;
     private boolean isRepeatable;
+    protected boolean isBirthday;
 
     public int getId() {
         return this.id;
@@ -47,6 +48,10 @@ public abstract class Event {
 
     public boolean isRepeatable() {
         return isRepeatable;
+    }
+
+    public boolean getIsBirthday() {
+        return this.isBirthday;
     }
 
     public Event(Date date, String name, String description, boolean isRepeatable) {
